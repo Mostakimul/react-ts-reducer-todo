@@ -1,4 +1,5 @@
-import { useReducer } from 'react';
+import { Typography } from '@mui/material';
+import { useEffect, useReducer } from 'react';
 import TodoForm from '../components/TodoForm';
 import Todos from '../components/Todos';
 interface Todo {
@@ -31,9 +32,14 @@ function reducer(state: Todo[], action: ActionType) {
 }
 
 const Home = () => {
-  const [allTodos, dispatch] = useReducer(reducer, []);
+  const [allTodos, dispatch] = useReducer(reducer, [], () => {
+    const myTodos = localStorage.getItem('myAllTodos');
+    return myTodos ? JSON.parse(myTodos) : [];
+  });
 
-  console.log('All', allTodos);
+  useEffect(() => {
+    localStorage.setItem('myAllTodos', JSON.stringify(allTodos));
+  }, [allTodos]);
 
   // add todo
   const handleClick = (taskValue: string) => {
@@ -48,8 +54,6 @@ const Home = () => {
 
   // remove todo
   const handleDelete = (id: number) => {
-    console.log(id);
-
     if (id) {
       dispatch({
         type: 'REMOVE_TODO',
@@ -60,7 +64,9 @@ const Home = () => {
 
   return (
     <div>
-      <h2>My Todo App</h2>
+      <Typography variant="h4" sx={{ textAlign: 'center', margin: '10px 0' }}>
+        My Todo App
+      </Typography>
       <TodoForm handleClick={handleClick} />
       {allTodos.length > 0 && (
         <Todos todos={allTodos} deleteHandle={handleDelete} />
