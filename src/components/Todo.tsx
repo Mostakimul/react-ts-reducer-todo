@@ -1,14 +1,17 @@
 import { ListItem, ListItemText, Typography } from '@mui/material';
 
-type TodoProps = {
-  todo: string;
+type SingleTodoProps = {
+  todo: {
+    id: number;
+    task: string;
+  };
 };
 
-const Todo = ({ todo }: TodoProps) => {
+const Todo = (props: SingleTodoProps) => {
   return (
     <ListItem>
       <ListItemText primary="Single-line item">
-        <Typography variant="h6">{todo}</Typography>
+        <Typography variant="h6">{props.todo.task}</Typography>
       </ListItemText>
     </ListItem>
   );

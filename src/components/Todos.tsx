@@ -1,20 +1,14 @@
 import { Box, List, Paper } from '@mui/material';
 import Todo from './Todo';
 
-interface TodoTypes {
-  id: number;
-  todo: string;
-}
+type TodosProps = {
+  todos: {
+    id: number;
+    task: string;
+  }[];
+};
 
-const todos: TodoTypes[] = [
-  { id: 1, todo: 'Learn Something' },
-  { id: 2, todo: 'Learn Something' },
-  { id: 3, todo: 'Learn Something' },
-  { id: 4, todo: 'Learn Something' },
-  { id: 5, todo: 'Learn Something' },
-];
-
-const Todos = () => {
+const Todos = (props: TodosProps) => {
   return (
     <Box
       sx={{
@@ -24,8 +18,8 @@ const Todos = () => {
     >
       <Paper>
         <List>
-          {todos.map((todo) => (
-            <Todo key={todo.id} todo={todo.todo} />
+          {props.todos.map((todo) => (
+            <Todo key={todo.id} todo={todo} />
           ))}
         </List>
       </Paper>
