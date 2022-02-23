@@ -1,14 +1,15 @@
 import { Box, List, Paper } from '@mui/material';
 import Todo from './Todo';
 
-type TodosProps = {
+interface TodosProps {
   todos: {
     id: number;
     task: string;
   }[];
-};
+  deleteHandle: (id: number) => void;
+}
 
-const Todos = (props: TodosProps) => {
+const Todos: React.FC<TodosProps> = ({ todos, deleteHandle }) => {
   return (
     <Box
       sx={{
@@ -18,8 +19,8 @@ const Todos = (props: TodosProps) => {
     >
       <Paper>
         <List>
-          {props.todos.map((todo) => (
-            <Todo key={todo.id} todo={todo} />
+          {todos.map((todo) => (
+            <Todo key={todo.id} todo={todo} todoDelete={deleteHandle} />
           ))}
         </List>
       </Paper>

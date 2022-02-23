@@ -1,19 +1,34 @@
-import { ListItem, ListItemText, Typography } from '@mui/material';
+import { Button, Grid, ListItem, ListItemText } from '@mui/material';
 
-type SingleTodoProps = {
+interface SingleTodoProps {
   todo: {
     id: number;
     task: string;
   };
-};
+  todoDelete: (id: number) => void;
+}
 
-const Todo = (props: SingleTodoProps) => {
+const Todo: React.FC<SingleTodoProps> = ({ todo, todoDelete }) => {
   return (
-    <ListItem>
-      <ListItemText primary="Single-line item">
-        <Typography variant="h6">{props.todo.task}</Typography>
-      </ListItemText>
-    </ListItem>
+    <Grid container>
+      <Grid item xs={3} />
+      <Grid item xs={5}>
+        <ListItem>
+          <ListItemText
+            sx={{ margin: '5px 0' }}
+            primary={todo.task}
+          ></ListItemText>
+          <Button
+            variant="contained"
+            color="error"
+            size="small"
+            onClick={() => todoDelete(todo.id)}
+          >
+            Delete Todo
+          </Button>
+        </ListItem>
+      </Grid>
+    </Grid>
   );
 };
 
